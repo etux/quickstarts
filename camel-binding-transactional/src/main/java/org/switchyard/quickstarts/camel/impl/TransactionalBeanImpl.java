@@ -16,6 +16,7 @@ public class TransactionalBeanImpl implements ITransactionalBean {
     @Override
     public void sayHello(String name) throws TransactionalException {
         if (EXCEPTION_PAYLOAD.equals(name)) {
+            System.out.println("Throwing exception");
             throw new TransactionalException("Exception thrown from TransactionalBeanImpl");
         }
         System.out.println("Hello: "+name);

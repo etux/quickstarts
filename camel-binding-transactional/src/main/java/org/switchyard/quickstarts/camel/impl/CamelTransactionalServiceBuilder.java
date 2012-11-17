@@ -29,12 +29,11 @@ public class CamelTransactionalServiceBuilder extends RouteBuilder {
      */
     public void configure() throws Exception {
         prepareContext();
-
-
         from(inputService)
             .onException(TransactionalException.class)
                     .maximumRedeliveries(3)
                     .handled(true)
+                    .log("Exception handled")
                     .to(exceptionService)
                     .end()
             .to(businessService)
