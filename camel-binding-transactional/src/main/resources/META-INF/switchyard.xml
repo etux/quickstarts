@@ -50,13 +50,11 @@
             </camel:binding.jms>
         </sca:reference>
 
-        <sca:component name="GreetingService">
+        <sca:component name="GreetingService" requires="managedTransaction.Global">
             <camel:implementation.camel>
-                <!-- requires="managedTransaction.Global" -->
                 <camel:java class="org.switchyard.quickstarts.camel.impl.CamelTransactionalServiceBuilder" />
             </camel:implementation.camel>
-            <sca:service name="TransactionalRoutingService">
-                <!-- requires="propagatesTransaction" -->
+            <sca:service name="TransactionalRoutingService" requires="propagatesTransaction">
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.CamelTransactionalService" />
             </sca:service>
             <sca:reference name="OutputService" multiplicity="1..1" >
@@ -71,10 +69,8 @@
         </sca:component>
         
         <sca:component name="BeanService">
-            <bean:implementation.bean class="org.switchyard.quickstarts.camel.impl.TransactionalBeanImpl" />
-            <!-- requires="noManagedTransaction" -->
-            <sca:service name="BeanService">
-                <!-- requires="suspendsTransaction" -->
+            <bean:implementation.bean class="org.switchyard.quickstarts.camel.impl.TransactionalBeanImpl" requires="noManagedTransaction" />
+            <sca:service name="BeanService" requires="suspendsTransaction">
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.ITransactionalBean" />
             </sca:service>
         </sca:component>
