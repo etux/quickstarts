@@ -29,6 +29,7 @@
                 <camel:connectionFactory>%23ConnectionFactory</camel:connectionFactory>
                 <camel:username>guest</camel:username>
                 <camel:password>guestp</camel:password>
+                <camel:disableReplyTo>true</camel:disableReplyTo>
                 <camel:transacted>true</camel:transacted>
                 <camel:transactionManager>%23jtaTransactionManager</camel:transactionManager>
             </camel:binding.jms>
@@ -43,6 +44,7 @@
                 <camel:connectionFactory>%23ConnectionFactory</camel:connectionFactory>
                 <camel:username>guest</camel:username>
                 <camel:password>guestp</camel:password>
+                <camel:disableReplyTo>true</camel:disableReplyTo>
                 <camel:transacted>true</camel:transacted>
                 <camel:transactionManager>%23jtaTransactionManager</camel:transactionManager>
             </camel:binding.jms>
@@ -69,7 +71,7 @@
         <sca:component name="BeanService">
             <bean:implementation.bean class="org.switchyard.quickstarts.camel.impl.TransactionalBeanImpl" requires="noManagedTransaction"/>
             <sca:service name="BeanService">
-                <sca:interface.java interface="org.switchyard.quickstarts.camel.api.ITransactionalBean" />
+                <sca:interface.java interface="org.switchyard.quickstarts.camel.api.ITransactionalBean" requires="suspendsTransaction"/>
             </sca:service>
         </sca:component>
 

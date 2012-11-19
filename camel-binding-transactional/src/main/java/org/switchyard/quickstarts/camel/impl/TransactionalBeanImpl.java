@@ -14,11 +14,12 @@ public class TransactionalBeanImpl implements ITransactionalBean {
     public static final String EXCEPTION_PAYLOAD = "exception";
 
     @Override
-    public void sayHello(String name) throws TransactionalException {
+    public String sayHello(String name) throws TransactionalException {
         if (EXCEPTION_PAYLOAD.equals(name)) {
             System.out.println("Throwing exception");
             throw new TransactionalException("Exception thrown from TransactionalBeanImpl");
         }
         System.out.println("Hello: "+name);
+        return name;
     }
 }

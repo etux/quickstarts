@@ -13,8 +13,6 @@
             <camel:binding.jms>
                 <camel:queue>testQueueInput</camel:queue>
                 <camel:connectionFactory>%23ConnectionFactory</camel:connectionFactory>
-                <camel:username>guest</camel:username>
-                <camel:password>guestp</camel:password>
                 <camel:transacted>true</camel:transacted>
                 <camel:transactionManager>%23jtaTransactionManager</camel:transactionManager>
             </camel:binding.jms>
@@ -27,8 +25,7 @@
             <camel:binding.jms>
                 <camel:queue>testQueueOutput</camel:queue>
                 <camel:connectionFactory>%23ConnectionFactory</camel:connectionFactory>
-                <camel:username>guest</camel:username>
-                <camel:password>guestp</camel:password>
+                <camel:disableReplyTo>true</camel:disableReplyTo>
                 <camel:transacted>true</camel:transacted>
                 <camel:transactionManager>%23jtaTransactionManager</camel:transactionManager>
             </camel:binding.jms>
@@ -41,8 +38,7 @@
             <camel:binding.jms>
                 <camel:queue>testDeadLetterQueue</camel:queue>
                 <camel:connectionFactory>%23ConnectionFactory</camel:connectionFactory>
-                <camel:username>guest</camel:username>
-                <camel:password>guestp</camel:password>
+                <camel:disableReplyTo>true</camel:disableReplyTo>
                 <camel:transacted>true</camel:transacted>
                 <camel:transactionManager>%23jtaTransactionManager</camel:transactionManager>
             </camel:binding.jms>

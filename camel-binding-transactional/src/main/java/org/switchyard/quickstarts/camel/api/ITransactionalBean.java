@@ -12,5 +12,5 @@ import org.switchyard.quickstarts.camel.impl.TransactionalException;
 @Local
 public interface ITransactionalBean {
 
-    void sayHello(String name) throws TransactionalException;
+    String sayHello(String name) throws TransactionalException;
 }

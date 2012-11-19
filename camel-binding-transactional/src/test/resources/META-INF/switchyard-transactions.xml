@@ -31,6 +31,7 @@
                 <camel:connectionFactory>%23ConnectionFactory</camel:connectionFactory>
                 <camel:username>guest</camel:username>
                 <camel:password>guestp</camel:password>
+                <camel:disableReplyTo>true</camel:disableReplyTo>
                 <camel:transacted>true</camel:transacted>
                 <camel:transactionManager>%23jtaTransactionManager</camel:transactionManager>
             </camel:binding.jms>
@@ -46,6 +47,7 @@
                 <camel:connectionFactory>%23ConnectionFactory</camel:connectionFactory>
                 <camel:username>guest</camel:username>
                 <camel:password>guestp</camel:password>
+                <camel:disableReplyTo>true</camel:disableReplyTo>
                 <camel:transacted>true</camel:transacted>
                 <camel:transactionManager>%23jtaTransactionManager</camel:transactionManager>
             </camel:binding.jms>
@@ -58,10 +60,10 @@
             <sca:service name="TransactionalRoutingService" requires="propagatesTransaction">
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.CamelTransactionalService" />
             </sca:service>
-            <sca:reference name="OutputService" multiplicity="1..1" requires="propagatesTransaction">
+            <sca:reference name="OutputService" requires="propagatesTransaction">
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.ITransactionalBean" />
             </sca:reference>
-            <sca:reference name="BeanService" requires="suspendsTransaction">
+            <sca:reference name="BeanService" requires="propagatesTransaction">
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.ITransactionalBean" />
             </sca:reference>
             <sca:reference name="ExceptionService" requires="propagatesTransaction">
@@ -70,7 +72,7 @@
         </sca:component>
 
         <sca:component name="BeanService">
-            <bean:implementation.bean class="org.switchyard.quickstarts.camel.impl.TransactionalBeanImpl" requires="noManagedTransaction"/>
+            <bean:implementation.bean class="org.switchyard.quickstarts.camel.impl.TransactionalBeanImpl" requires="managedTransaction.Global"/>
             <sca:service name="BeanService">
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.ITransactionalBean" />
             </sca:service>

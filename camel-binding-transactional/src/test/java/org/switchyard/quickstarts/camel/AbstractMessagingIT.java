@@ -61,9 +61,9 @@ public class AbstractMessagingIT {
         return session.createProducer(queue);
     }
 
-    protected void assertConsumer(MessageConsumer clientConsumer, String text) throws JMSException {
+    protected void assertConsumer(String queueName, MessageConsumer clientConsumer, String text) throws JMSException {
         TextMessage message = (TextMessage) clientConsumer.receive(BaseCamelMessagingIT.JMS_RECEPTION_TIMEOUT);
-        assertMessage(text, message, clientConsumer.toString());
+        assertMessage(text, message, queueName);
     }
 
     protected void assertMessage(String messageBody, TextMessage message, String queueName) throws JMSException {

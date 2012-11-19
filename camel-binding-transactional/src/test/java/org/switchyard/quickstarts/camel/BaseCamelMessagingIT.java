@@ -49,8 +49,8 @@ public class BaseCamelMessagingIT extends AbstractMessagingIT {
             outputConsumer  = getConsumer(_session, getQueue(TEST_QUEUE_OUTPUT));
             dlConsumer      = getConsumer(_session, getQueue(TEST_QUEUE_DEAD_LETTER));
 
-            assertConsumer(outputConsumer, output);
-            assertConsumer(dlConsumer, deadLetter);
+            assertConsumer(TEST_QUEUE_OUTPUT, outputConsumer, output);
+            assertConsumer(TEST_QUEUE_DEAD_LETTER, dlConsumer, deadLetter);
         } finally {
             if (outputConsumer != null) try { outputConsumer.close(); } catch (Exception e) {}
             if (dlConsumer != null) try { dlConsumer.close(); } catch (Exception e) {}
