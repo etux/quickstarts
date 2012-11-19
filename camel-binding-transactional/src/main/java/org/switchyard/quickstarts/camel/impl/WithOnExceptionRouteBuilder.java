@@ -7,20 +7,20 @@ import org.switchyard.component.camel.Route;
 import org.switchyard.quickstarts.camel.api.CamelTransactionalService;
 
 @Route(name = "TransactionalRoutingService", value = CamelTransactionalService.class)
-public class CamelTransactionalServiceBuilder extends RouteBuilder {
+public class WithOnExceptionRouteBuilder extends RouteBuilder {
 
-    private String endpointProperties;
-    private String inputService;
-    private String businessService;
-    private String outputService;
-    private String exceptionService;
+    private String _endpointProperties;
+    private String _inputService;
+    private String _businessService;
+    private String _outputService;
+    private String _exceptionService;
 
-    public CamelTransactionalServiceBuilder() {
+    public WithOnExceptionRouteBuilder() {
         this("classpath:endpoints.properties");
     }
 
-    public CamelTransactionalServiceBuilder(String endpointProperties) {
-        this.endpointProperties = endpointProperties;
+    public WithOnExceptionRouteBuilder(String endpointProperties) {
+        this._endpointProperties = endpointProperties;
     }
 
     /**
@@ -29,24 +29,24 @@ public class CamelTransactionalServiceBuilder extends RouteBuilder {
      */
     public void configure() throws Exception {
         prepareContext();
-        from(inputService)
+        from(_inputService)
             .onException(TransactionalException.class)
                     .maximumRedeliveries(3)
                     .handled(true)
                     .log("Exception handled")
-                    .to(exceptionService)
+                    .to(_exceptionService)
                     .end()
-            .to(businessService)
-            .to(outputService);
+            .to(_businessService)
+            .to(_outputService);
     }
 
     private void prepareContext() throws Exception {
         ModelCamelContext context = getContext();
         PropertiesComponent props = context.getComponent("properties", PropertiesComponent.class);
-        props.setLocation(endpointProperties);
-        inputService = context.resolvePropertyPlaceholders("{{inputService}}");
-        businessService = context.resolvePropertyPlaceholders("{{businessService}}");
-        outputService = context.resolvePropertyPlaceholders("{{outputService}}");
-        exceptionService = context.resolvePropertyPlaceholders("{{exceptionService}}");
+        props.setLocation(_endpointProperties);
+        _inputService = context.resolvePropertyPlaceholders("{{inputService}}");
+        _businessService = context.resolvePropertyPlaceholders("{{businessService}}");
+        _outputService = context.resolvePropertyPlaceholders("{{outputService}}");
+        _exceptionService = context.resolvePropertyPlaceholders("{{exceptionService}}");
     }
 }

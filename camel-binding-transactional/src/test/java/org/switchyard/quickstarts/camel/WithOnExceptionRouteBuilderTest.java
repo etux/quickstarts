@@ -7,7 +7,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
-import org.switchyard.quickstarts.camel.impl.CamelTransactionalServiceBuilder;
+import org.switchyard.quickstarts.camel.impl.WithOnExceptionRouteBuilder;
 import org.switchyard.quickstarts.camel.impl.TransactionalBeanImpl;
 import org.switchyard.quickstarts.camel.impl.TransactionalException;
 
@@ -16,7 +16,7 @@ import org.switchyard.quickstarts.camel.impl.TransactionalException;
  * Date: 11/17/12
  * Time: 7:09 PM
  */
-public class CamelTransactionalServiceBuilderTest extends CamelTestSupport {
+public class WithOnExceptionRouteBuilderTest extends CamelTestSupport {
 
     private MockEndpoint exceptionService;
     private MockEndpoint outputService;
@@ -24,7 +24,7 @@ public class CamelTransactionalServiceBuilderTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() {
-        return new CamelTransactionalServiceBuilder("classpath:testEndpoints.properties");
+        return new WithOnExceptionRouteBuilder("classpath:testEndpoints.properties");
     }
 
     @Test
@@ -40,6 +40,7 @@ public class CamelTransactionalServiceBuilderTest extends CamelTestSupport {
         businessService.whenAnyExchangeReceived(new Processor() {
             @Override
             public void process(Exchange exchange) throws Exception {
+                System.out.println("sayHello method invoked");
                 String message = exchange.getIn().getBody(String.class);
                 if (TransactionalBeanImpl.EXCEPTION_PAYLOAD.equals(message)) {
                     throw new TransactionalException();

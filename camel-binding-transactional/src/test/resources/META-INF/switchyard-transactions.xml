@@ -70,8 +70,8 @@
         </sca:component>
 
         <sca:component name="BeanService">
-            <bean:implementation.bean class="org.switchyard.quickstarts.camel.impl.TransactionalBeanImpl" />
-            <sca:service name="BeanService" requires="suspendsTransaction">
+            <bean:implementation.bean class="org.switchyard.quickstarts.camel.impl.TransactionalBeanImpl" requires="noManagedTransaction"/>
+            <sca:service name="BeanService">
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.ITransactionalBean" />
             </sca:service>
         </sca:component>
