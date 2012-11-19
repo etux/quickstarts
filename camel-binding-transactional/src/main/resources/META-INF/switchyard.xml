@@ -39,8 +39,7 @@
         <sca:reference
                 name="ExceptionService"
                 promote="GreetingService/ExceptionService"
-                multiplicity="1..1"
-                requires="propagatesTransaction">
+                multiplicity="1..1">
             <camel:binding.jms>
                 <camel:queue>testDeadLetterQueue</camel:queue>
                 <camel:connectionFactory>%23ConnectionFactory</camel:connectionFactory>
@@ -58,19 +57,19 @@
             <sca:service name="TransactionalRoutingService" requires="propagatesTransaction">
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.CamelTransactionalService" />
             </sca:service>
-            <sca:reference name="OutputService" multiplicity="1..1" requires="propagatesTransaction">
+            <sca:reference name="OutputService" multiplicity="1..1" >
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.ITransactionalBean" />
             </sca:reference>
-            <sca:reference name="BeanService" requires="suspendsTransaction">
+            <sca:reference name="BeanService">
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.ITransactionalBean" />
             </sca:reference>
-            <sca:reference name="ExceptionService" requires="propagatesTransaction">
+            <sca:reference name="ExceptionService">
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.ITransactionalBean" />
             </sca:reference>
         </sca:component>
-
+        
         <sca:component name="BeanService">
-            <bean:implementation.bean class="org.switchyard.quickstarts.camel.impl.TransactionalBeanImpl" />
+            <bean:implementation.bean class="org.switchyard.quickstarts.camel.impl.TransactionalBeanImpl" requires="noManagedTransaction" />
             <sca:service name="BeanService" requires="suspendsTransaction">
                 <sca:interface.java interface="org.switchyard.quickstarts.camel.api.ITransactionalBean" />
             </sca:service>
